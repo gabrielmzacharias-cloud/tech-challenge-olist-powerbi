@@ -1,0 +1,30 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Dados brutos e processados pesados
+data/raw/*
+data/processed/*
+!data/raw/README.md
+!data/processed/README.md
+
+# Power BI cache e arquivos temporários
+*.tmp
+*.log
+*.pbi/cache.abf
+*.pbi/localSettings.json
+*/.pbi/cache.abf
+*/.pbi/localSettings.json
+
+# Credenciais e segredos
+*.key
+*.pem
+secrets.*
+credentials.*
