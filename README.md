@@ -1,173 +1,148 @@
-# Tech Challenge - Fase 1 | E-commerce Olist
+# 📦 Brazilian E-Commerce Intelligence — Olist Dataset
 
-Projeto desenvolvido para o Tech Challenge da Pós Tech, com foco na construção de um relatório executivo para investidores e acionistas do setor de e-commerce, utilizando o **Brazilian E-Commerce Public Dataset by Olist**.
-
-> Status do projeto: em finalização  
-> Ferramenta principal: Power BI  
-> Entregável principal: Dashboard executivo + storytelling + documentação de dados
+> Relatório executivo de análise de e-commerce para investidores, construído com dados reais do marketplace Olist (2016–2018).
 
 ---
 
-## 1. Objetivo do projeto
+## 📌 Sobre o Projeto
 
-Transformar dados transacionais de e-commerce em uma análise executiva clara, com foco em:
+Este projeto foi desenvolvido como parte do **Tech Challenge — Fase 1** do programa de pós-graduação **DTAT (Data Analytics) da POSTECH FIAP**.
 
-- desempenho comercial;
-- eficiência logística;
-- satisfação do cliente;
-- oportunidades de crescimento;
-- recomendações acionáveis para tomada de decisão.
-
-A proposta do relatório é apoiar uma visão de negócio voltada a investidores, destacando onde a operação apresenta maior potencial de receita, risco operacional e oportunidade de melhoria.
+O objetivo é transformar dados transacionais brutos em uma narrativa clara sobre desempenho comercial, eficiência logística e satisfação do cliente, com recomendações acionáveis para investidores.
 
 ---
 
-## 2. Links do projeto
+## 📊 Dataset
 
-Preencha antes da entrega final:
+**Brazilian E-Commerce Public Dataset by Olist**
+- 🔗 Fonte: [Kaggle — olistbr/brazilian-ecommerce](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- ~100 mil pedidos reais entre **setembro de 2016** e **outubro de 2018**
+- Dados anonimizados pela própria Olist
+- 9 tabelas interconectadas
 
-| Item | Link |
+### Tabelas utilizadas
+
+| Tabela | Descrição |
 |---|---|
-| Repositório GitHub | `COLE_AQUI_O_LINK_DO_GITHUB` |
-| Dashboard / PBIX | `COLE_AQUI_O_LINK_DO_ARQUIVO_OU_POWER_BI_SERVICE` |
-| Apresentação executiva | `COLE_AQUI_O_LINK_DA_APRESENTACAO` |
-| Vídeo executivo | `COLE_AQUI_O_LINK_DO_VIDEO` |
+| `olist_orders_dataset` | Pedidos com datas e status |
+| `olist_order_items_dataset` | Itens por pedido (preço, frete) |
+| `olist_order_payments_dataset` | Pagamentos por pedido |
+| `olist_order_reviews_dataset` | Avaliações dos clientes |
+| `olist_customers_dataset` | Dados de clientes |
+| `olist_products_dataset` | Catálogo de produtos |
+| `olist_sellers_dataset` | Dados de vendedores |
+| `olist_geolocation_dataset` | Coordenadas por CEP |
+| `product_category_name_translation` | Tradução de categorias |
 
 ---
 
-## 3. Base de dados
+## 🔧 Arquitetura e ETL
 
-Fonte: Brazilian E-Commerce Public Dataset by Olist.
+Todo o processo de transformação foi realizado **dentro do Power BI**, utilizando o **Power Query (linguagem M)** como ferramenta de ETL — sem dependência de ferramentas externas.
 
-O dataset contém pedidos realizados entre 2016 e 2018 e possui tabelas relacionadas a clientes, pedidos, itens, produtos, vendedores, pagamentos, avaliações e geolocalização.
+### Transformações realizadas
 
-### Principais tabelas utilizadas
+- ✅ Integração das 9 tabelas em um **modelo estrela (Star Schema)**
+- ✅ Tradução de categorias de produtos e meios de pagamento para português
+- ✅ Cálculo de `lead_time_dias` (dias entre compra e entrega)
+- ✅ Criação de `status_entrega` (No prazo / Atrasado / Não entregue)
+- ✅ Agregação de pagamentos por pedido (merge de parcelas)
+- ✅ Deduplicação de reviews (1 review por pedido)
+- ✅ Correção de locale (`en-US`) para leitura correta de valores decimais
+- ✅ Agregação de geolocalização por CEP (redução de 1M → ~19k linhas)
 
-| Tabela | Finalidade |
-|---|---|
-| `olist_customers_dataset` | Dados de clientes e localização |
-| `olist_orders_dataset` | Pedidos, status e datas da jornada |
-| `olist_order_items_dataset` | Produtos vendidos, sellers, preço e frete |
-| `olist_order_payments_dataset` | Formas de pagamento e parcelas |
-| `olist_order_reviews_dataset` | Avaliações e satisfação dos clientes |
-| `olist_products_dataset` | Dados dos produtos |
-| `olist_sellers_dataset` | Dados dos vendedores |
-| `olist_geolocation_dataset` | Coordenadas e localização por CEP |
-| `product_category_name_translation` | Tradução das categorias |
+### Modelo de dados
 
----
-
-## 4. Perguntas de negócio
-
-O dashboard foi estruturado para responder perguntas como:
-
-1. Como evoluíram os pedidos, a receita e o ticket médio ao longo do tempo?
-2. Quais categorias, estados e sellers concentram maior desempenho comercial?
-3. Como o prazo de entrega impacta a satisfação dos clientes?
-4. Quais regiões apresentam maior risco logístico?
-5. Quais oportunidades podem aumentar receita, reduzir atrasos ou melhorar a experiência do cliente?
-
----
-
-## 5. Estrutura do repositório
-
-```text
-.
-├── README.md
-├── .gitignore
-├── .gitattributes
-├── docs/
-│   ├── checklist_entrega.md
-│   ├── como_subir_github.md
-│   ├── dicionario_dados.md
-│   ├── extrair_codigo_powerbi.md
-│   ├── governanca_qualidade.md
-│   ├── roteiro_video_5min.md
-│   └── storytelling_executivo.md
-├── src/
-│   ├── dax/
-│   │   └── medidas_base_olist.dax
-│   ├── powerquery/
-│   │   ├── README.md
-│   │   └── exemplo_importacao_csv_olist.m
-│   └── python/
-│       └── validacao_qualidade_dados.py
-├── reports/
-│   └── coloque_aqui_o_pbix_ou_pbip.txt
-├── presentation/
-│   └── coloque_aqui_o_link_ou_arquivo_da_apresentacao.txt
-├── data/
-│   ├── raw/
-│   │   └── README.md
-│   └── processed/
-│       └── README.md
-└── assets/
-    └── img/
-        └── README.md
+```
+fFatoPedidos (112.650 linhas — granularidade de item)
+    ├── dClientes
+    │     └── dGeolocalizacao
+    ├── dProdutos (com tradução de categorias)
+    ├── dVendedores
+    └── dCalendario
 ```
 
 ---
 
-## 6. Como reproduzir o projeto
+## 📈 Principais Análises
 
-1. Baixar o dataset original.
-2. Colocar os arquivos `.csv` na pasta `data/raw`.
-3. Abrir o arquivo `.pbix` ou `.pbip` na pasta `reports`.
-4. Ajustar o caminho dos arquivos no Power Query, se necessário.
-5. Atualizar o modelo no Power BI.
-6. Conferir as medidas DAX em `src/dax/medidas_base_olist.dax`.
-7. Validar os principais indicadores com os checks de qualidade.
+### 💰 Crescimento e Receita
+- GMV Total: **R$ 15,8 milhões** no período
+- Ticket Médio: **R$ 161** por pedido
+- **98.666 pedidos** realizados
+- SP representa **37% do GMV** total
+
+### 🚚 Logística e SLA
+- **98% dos pedidos** entregues com sucesso
+- Lead time médio: **~12 dias**
+- Correlação negativa entre tempo de entrega e satisfação do cliente
+
+### 💳 Pagamentos
+- **75,9%** dos pagamentos via cartão de crédito
+- **19,9%** via boleto
+- Média de **3,7 parcelas** por pedido no cartão
+
+### ⭐ Satisfação
+- NPS aproximado: **63%**
+- Review score médio: **4,07 / 5,0**
+- Beleza & Saúde: categoria com melhor volume + satisfação
 
 ---
 
-## 7. Principais indicadores
+## 🗂️ Estrutura do Repositório
 
-| Indicador | Descrição |
+```
+olist-ecommerce-analysis/
+├── powerbi/
+│   └── olist_dashboard.pbix       ← Dashboard Power BI completo
+├── data/
+│   └── README_dados.md            ← Instruções para baixar o dataset
+└── README.md
+```
+
+> ⚠️ **Os CSVs do dataset não estão versionados** por questões de tamanho.
+> Baixe diretamente do [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) e coloque na pasta `data/raw/`.
+
+---
+
+## 🛠️ Tecnologias
+
+| Ferramenta | Uso |
 |---|---|
-| Receita | Soma dos valores de produtos vendidos |
-| Frete | Soma do valor de frete |
-| Pedidos | Quantidade distinta de pedidos |
-| Clientes | Quantidade distinta de clientes únicos |
-| Ticket médio | Receita dividida pela quantidade de pedidos |
-| Prazo médio de entrega | Diferença entre data de compra e data de entrega |
-| % de atraso | Proporção de pedidos entregues após a data estimada |
-| Review médio | Média da nota de avaliação do cliente |
-| Receita por categoria | Receita agrupada por categoria de produto |
-| Receita por UF | Receita agrupada por estado do cliente ou seller |
+| **Power BI Desktop** | Dashboard, modelagem e visualizações |
+| **Power Query (M)** | ETL — limpeza e transformação dos dados |
+| **DAX** | Medidas calculadas e KPIs |
+| **HTML Content (visual)** | Dashboard customizado em HTML/CSS/SVG |
 
 ---
 
-## 8. Recomendações executivas
+## 🚀 Como reproduzir
 
-As recomendações finais devem ser ajustadas conforme os resultados do seu PBIX. Uma estrutura sugerida:
-
-1. **Priorizar categorias de alta receita e bom nível de satisfação**  
-   Direcionar investimento para categorias com maior retorno e menor risco de experiência negativa.
-
-2. **Atuar nas regiões com maior atraso logístico**  
-   Reduzir gargalos de entrega pode melhorar reviews e recompra.
-
-3. **Fortalecer sellers com alto desempenho**  
-   Sellers com alto volume, baixo atraso e boas avaliações devem receber prioridade em campanhas, exposição e relacionamento.
-
-4. **Monitorar categorias com alto frete ou baixo review**  
-   Esses grupos podem prejudicar margem e percepção do cliente.
+1. Baixe o dataset no [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+2. Extraia os CSVs na pasta `C:\Users\SEU_USUARIO\Downloads\FIAP\db\`
+3. Abra o arquivo `powerbi/olist_dashboard.pbix` no Power BI Desktop
+4. Clique em **Atualizar** — as queries vão recarregar automaticamente
 
 ---
 
-## 9. Observações
+## 📋 Recomendações para Investidores
 
-- Os dados são públicos e anonimizados.
-- Os arquivos brutos não precisam ser versionados se forem muito pesados.
-- O arquivo `.pbix` pode ser mantido no repositório usando Git LFS, caso ultrapasse o limite recomendado para arquivos grandes.
-- Para melhor versionamento, prefira salvar também em formato Power BI Project (`.pbip`), quando disponível.
+1. **Expansão regional** — Norte e Nordeste têm alta demanda reprimida mas lead times elevados. Investimento logístico nessas regiões tem alto potencial de ROI.
+
+2. **Foco em categorias de alto valor** — Relógios, Informática e Automotivo têm ticket médio acima de R$ 180. Estratégias de curadoria e garantia podem aumentar GMV sem aumentar volume de pedidos.
+
+3. **Retenção de clientes** — A maioria dos clientes realiza apenas uma compra no período. Programas de fidelização têm impacto direto na receita recorrente.
 
 ---
 
-## 10. Autores
+## 👤 Autor
 
-Preencha com os integrantes do grupo:
+**Gabriel Zacharias**
+Analista de Dados Sênior · POSTECH FIAP DTAT
 
-- Nome 1
-- Nome 2
-- Nome 3
+---
+
+## 📄 Licença
+
+Dataset: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — Olist
+Código e análise: MIT License
